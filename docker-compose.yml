@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile  
+    image: go_base_api:latest
+    environment:
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_HOST=host.docker.internal # Reemplazar por ${DB_HOST} si se usa un contenedor de base de datos o si se usa un host diferente a localhost
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
+    volumes:
+      - .:/app  # Esto asegura que los archivos locales estén disponibles dentro del contenedor
+    ports:
+      - "8080:8080"  
+    env_file: ".env"  
+
