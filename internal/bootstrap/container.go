@@ -3,6 +3,7 @@ package bootstrap
 import (
 	"database/sql"
 
+	"github.com/MauricioGiaconia/go_base_api/internal/adapter/inbound/router"
 	"github.com/MauricioGiaconia/go_base_api/internal/adapter/outbound/mysql"
 )
 
@@ -10,7 +11,8 @@ import (
 // Actúa como composition root: crea y conecta todas las piezas concretas.
 // Es el único lugar que conoce las implementaciones de los adapters.
 type Container struct {
-	DB *sql.DB
+	DB         *sql.DB
+	Registrars []router.RouteRegistrar
 }
 
 // NewContainer inicializa la infraestructura, servicios y handlers,
@@ -19,7 +21,9 @@ func NewContainer() *Container {
 	// --- Infraestructura compartida ---
 	db := mysql.NewConnection()
 
+	// --- Módulos de dominio ---
 	return &Container{
-		DB: db,
+		DB:         db,
+		Registrars: []router.RouteRegistrar{},
 	}
 }

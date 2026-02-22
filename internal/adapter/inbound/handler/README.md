@@ -13,6 +13,7 @@ Contiene los **controladores HTTP** (adaptadores inbound) de la API.
 
 - Dependen de los **input ports** definidos en `domain/port/`, NO de implementaciones concretas.
 - Las dependencias se inyectan en el constructor.
+- **No declaran sus propias rutas** — esa responsabilidad es de `routes/<dominio>_routes.go`.
 - Nomenclatura: `<Dominio>Handler` (ej: `AuthHandler`).
 - Constructores: `New<Dominio>Handler(...)`.
 - Archivo: `<dominio>_handler.go` en snake_case.
@@ -26,4 +27,5 @@ type AuthHandler struct {
 
 func NewAuthHandler(authService port.AuthServicePort) *AuthHandler { ... }
 func (h *AuthHandler) Login(c *gin.Context) { ... }
+func (h *AuthHandler) Register(c *gin.Context) { ... }
 ```
